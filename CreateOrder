@@ -1,0 +1,108 @@
+com.dbrickx.org.order
+/* import packages */
+
+@Entity
+@Table(name="Brick_Order")
+public void CreateOrder() {
+// create fields to store cust details in Brick_order table
+// generating unique ref no for each order
+@Id
+@GeneratedValue(strategy=GenerationType.AUTO)
+private int orderRefNo;
+@Column(name = "customer_name")
+private String custName;
+@Column(name = "no_of_bricks")
+private int noOfBricks;
+
+// adding setters and getters
+public int setOrderRefNo(int orderRefNo){
+this.orderRefNo = orderRefNo;
+}
+public int getOrderRefNo(int orderRefNo){
+this.orderRefNo = orderRefNo;
+}
+public String setCustName(int custName){
+this.custName = custName;
+}
+public String getCustName(int custName){
+this.custName = custName;
+}of
+public int setNoOfBricks(int noOfBricks){
+this.noOfBricks = noOfBricks;
+}
+public int getNoOfBricks(int noOfBricks){
+this.noOfBricks = noOfBricks;
+}
+// override to-String method
+} // class
+
+com.dbrickx.org.app
+/* create an app to get the order from customer */
+/* import relevant packages */
+@Configuration
+class OrderApp{
+public static void main(String []args) throws Exception{
+// declare variables
+CreateOrder corder , getOrder = null;
+Configuration cnf = null;
+SessionFactory sf = null;
+Session s = null;
+Transaction tx = null;
+Scanner scn = null;
+String cname = null;
+int noOfBricks = 0;
+int orderRef = 0;
+try{
+// create configure object
+cnf = new Configuration().configure.addAnnotatedClass(CreateOrder.class);
+// create SessionFactory object
+sf = cnf.getSessionFactory();
+// create Session object
+s = sf.openSession();
+// begin transaction
+tx = s.beginTransaction();
+System.out.println(Choose  for customer and 2 for client");
+System.out.println("Enter your choice:");
+// get order
+scn = new Scanner(System.in);
+System.out.println("Enter cust name:");
+cname = scnn.next();
+System.out.println("Enter no of bricks to be ordered:");
+noOfBricks = scn.next(Int);
+// setting values 
+corder.setCustName(cname);
+corder.setNoOfBricks(noOfBricks);
+// saving cust details to table
+s.save(corder);
+// commiting tx
+tx.commit();
+// fetch unique order reference
+getOrder = s.getTransaction(CreateOrder.class,orderRefNo);
+System.out.println("Your unique order ref no is: "+getOrder.orderRefNo);
+getOrder gOrder = new getOrder(getOrder);
+} // try
+catch(Exception e){
+e.printStackTrace();
+}
+finally{
+scn.close();
+}// finally
+}// main
+} // class
+
+com.dbrickx.org.controller
+/* getting cust details from client end */
+/* import relevant pkgs */
+@RestController
+public class Controller(){
+@RequestMapping("/getOrder")
+public CreateOrder getOrder(@RequestParam(value="refOrderNo")int refNo) {
+  // retrieving order details from entity class
+if(refNo!= null){
+System.out.println(new CreateOPrder());
+}
+else{
+System.out.println("Incorrect Order Id");
+}
+}
+}// class
